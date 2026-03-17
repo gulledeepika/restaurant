@@ -1,0 +1,225 @@
+<script>
+if (!localStorage.getItem("loggedIn")) {
+    window.location.href = "login.html";
+}
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Billing</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<div class="d-flex">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>HelloBooks</h3>
+        <a href="index.html">Dashboard</a>
+        <a href="invoice.html">Billing</a>
+        <a href="inventory.html">Inventory</a>
+        <a href="reports.html">Reports</a>
+
+        <div style="position:absolute; bottom:20px; width:180px;">
+        <button class="btn btn-danger w-100" onclick="logout()">Logout</button>
+    </div>
+        </div>
+
+    <!-- Main -->
+    <div class="main">
+
+        <div class="container mt-4">
+
+            <h2 class="mb-4 fw-bold">Restaurant Billing</h2>
+
+            <!-- Customer Info -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <input type="text" id="customerName" class="form-control" placeholder="Customer Name">
+                </div>
+                <div class="col-md-6">
+                    <input type="text" id="tableNumber" class="form-control" placeholder="Table Number">
+                </div>
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered" id="billingTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control"></td>
+                        <td><input type="number" class="form-control qty" oninput="calculateTotal()"></td>
+                        <td><input type="number" class="form-control price" oninput="calculateTotal()"></td>
+                        <td class="row-total">0</td>
+                        <td><button class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between mt-3">
+                <button class="btn btn-success" onclick="addRow()">+ Add Item</button>
+                <h5>Total: ₹ <span id="grandTotal">0</span></h5>
+                <button class="btn btn-primary" onclick="generateInvoice()">Generate Invoice</button>
+            </div>
+
+            <!-- INVOICE OUTPUT -->
+            <div id="invoiceSection" class="mt-5"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+
+// Add Row
+function addRow() {
+    let table = document.getElementById("billingTable").getElementsByTagName("tbody")[0];
+
+    let row = table.insertRow();
+
+    row.innerHTML = `
+    <td><input type="text" class="form-control"></td>
+    <td><input type="number" class="form-control qty" oninput="calculateTotal()"></td>
+    <td><input type="number" class="form-control price" oninput="calculateTotal()"></td>
+    <td class="row-total">0</td>
+    <td><button class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
+    `;
+}
+
+// Delete Row
+function deleteRow(btn) {
+    btn.closest("tr").remove();
+    calculateTotal();
+}
+
+// Calculate Total
+function calculateTotal() {
+    let rows = document.querySelectorAll("#billingTable tbody tr");
+    let grandTotal = 0;
+
+    rows.forEach(row => {
+        let qty = row.querySelector(".qty").value || 0;
+        let price = row.querySelector(".price").value || 0;
+
+        let total = qty * price;
+        row.querySelector(".row-total").innerText = total;
+
+        grandTotal += total;
+    });
+
+    document.getElementById("grandTotal").innerText = grandTotal;
+}
+
+// Generate Invoice
+function generateInvoice() {
+
+    let name = document.getElementById("customerName").value;
+    let tableNo = document.getElementById("tableNumber").value;
+    let rows = document.querySelectorAll("#billingTable tbody tr");
+
+    let invoiceHTML = `
+    <div class="card p-4 shadow">
+    <h3 class="text-center">Invoice</h3>
+    <div class="text-end mb-2">
+    <button class="btn btn-dark" onclick="printInvoice()">Print</button>
+    </div>
+        <p><strong>Customer:</strong> ${name}</p>
+        <p><strong>Table No:</strong> ${tableNo}</p>
+
+        <table class="table table-bordered mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    let grandTotal = 0;
+
+    rows.forEach(row => {
+        let item = row.cells[0].querySelector("input").value;
+        let qty = row.cells[1].querySelector("input").value;
+        let price = row.cells[2].querySelector("input").value;
+        let total = qty * price;
+
+        grandTotal += total;
+
+        invoiceHTML += `
+        <tr>
+            <td>${item}</td>
+            <td>${qty}</td>
+            <td>${price}</td>
+            <td>${total}</td>
+        </tr>
+        `;
+    });
+
+    invoiceHTML += `
+            </tbody>
+        </table>
+
+        <h4 class="text-end">Total: ₹ ${grandTotal}</h4>
+    </div>
+    `;
+
+    document.getElementById("invoiceSection").innerHTML = invoiceHTML;
+}
+
+</script>
+
+<script>
+function printInvoice() {
+
+    let content = document.getElementById("invoiceSection").innerHTML;
+
+    let newWindow = window.open('', '', 'width=800,height=600');
+
+    newWindow.document.write(`
+        <html>
+        <head>
+            <title>Print Invoice</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        </head>
+        <body>
+            ${content}
+        </body>
+        </html>
+    `);
+
+    newWindow.document.close();
+    newWindow.print();
+}
+
+function logout(){
+    localStorage.removeItem("loggedIn");
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,404 @@
+/* Reset */
+body{
+margin:0;
+font-family: Arial, sans-serif;
+background:#f4f6f9;
+}
+
+/* Layout */
+.d-flex{
+display:flex;
+}
+
+/* Sidebar */
+.sidebar{
+    width:220px;
+    height:100vh;
+    background:#1f2d3d;
+    color:white;
+    padding:30px 20px;   /* ✅ FIXED (top spacing increased) */
+    position:fixed;
+    left:0;
+    top:0;
+}
+
+/* Sidebar links */
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    margin:15px 0;
+    font-size:16px;
+    padding-left:5px;
+}
+
+.sidebar h3{
+    margin-bottom:30px;
+    font-weight:bold;
+}
+
+.sidebar a:hover{
+color:#00c3ff;
+}
+
+/* Logo */
+.logo{
+margin-bottom:30px;
+}
+
+/* Main content */
+.main{
+margin-left:220px;
+padding:30px;
+width:calc(100% - 220px);
+overflow-x:auto;
+min-height: 100vh;
+background: #f5f6fa;
+box-sizing: border-box;
+}
+
+.dashboard-card h5{
+font-size:18px;
+margin-bottom:12px;
+}
+
+.dashboard-card h3{
+font-size:34px;
+font-weight:700;
+white-space:nowrap;
+margin:0;
+}
+
+/* Lists */
+.list-group-item{
+font-size:15px;
+}
+
+/* Buttons */
+button{
+margin-top:10px;
+margin-right:10px;
+}
+
+.button-group{
+margin-top:15px;
+display:flex;
+gap:12px;
+}
+
+table{
+width:100%;
+margin-top:25px;
+border-collapse:collapse;
+background:white;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+border-radius:8px;
+overflow:hidden;
+}
+
+th{
+background:#f5f5f5;
+font-weight:600;
+padding:14px;
+text-align:left;
+}
+
+td{
+padding:12px;
+border-top:1px solid #e5e5e5;
+}
+
+
+table input{
+width:100%;
+padding:8px;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:14px;
+}
+
+.bill-table table{
+width:100%;
+background:white;
+}
+
+.status-select{
+min-width:140px;
+}
+
+table td{
+vertical-align:middle;
+}
+
+.btn-danger{
+padding:6px 12px;
+}
+
+.report-container{
+display:flex;
+gap:30px;
+margin-top:30px;
+flex-wrap:wrap;
+}
+
+.report-card{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+width:300px;
+transition:0.3s;
+}
+
+.report-card:hover{
+transform:translateY(-5px);
+}
+
+.dashboard-cards{
+display:flex;
+gap:24px;
+flex-wrap:wrap;
+margin-top:25px;
+}
+
+.dashboard-card{
+color:white;
+padding:28px 24px;
+border-radius:14px;
+width:220px;
+min-height:140px;
+box-shadow:0 4px 12px rgba(0,0,0,0.12);
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.dashboard-card{
+padding:25px;
+border-radius:12px;
+color:white;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+min-height:140px;
+}
+
+.dashboard-card:hover{
+transform:translateY(-5px);
+}
+
+.generate-center{
+display:flex;
+justify-content:center;
+margin-top:20px;
+}
+
+.save-section{
+display:flex;
+justify-content:center;
+margin-top:25px;
+}
+
+
+.save-btn{
+background:#28a745;
+color:white;
+border:none;
+padding:7px 14px;
+border-radius:5px;
+cursor:pointer;
+}
+
+
+.save-btn:hover{
+background:#218838;
+}
+
+.delete-btn{
+background:#dc3545;
+color:white;
+border:none;
+padding:7px 14px;
+border-radius:5px;
+cursor:pointer;
+margin-left:5px;
+}
+.add-btn{
+margin-top:18px;
+background:#28a745;
+color:white;
+border:none;
+padding:9px 16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* Save Changes Button */
+
+.save-container{
+display:flex;
+justify-content:center;
+margin-top:25px;
+}
+
+.save-container button{
+background:#28a745;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:6px;
+cursor:pointer;
+font-size:15px;
+}
+
+@media (max-width:768px){
+
+/* REMOVE LEFT SPACE COMPLETELY */
+.main{
+    margin-left:0 !important;
+    width:100% !important;
+    padding:15px;
+}
+
+/* SIDEBAR → TOP BAR */
+.sidebar{
+    width:100%;
+    height:auto;
+    position:relative;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around;
+    align-items:center;
+    padding:10px;
+}
+
+/* HIDE BIG TITLE */
+.sidebar h3{
+    display:none;
+}
+
+/* MENU ITEMS */
+.sidebar a{
+    font-size:14px;
+    margin:0;
+}
+
+/* FIX TABLE */
+.table-responsive{
+    overflow-x:auto;
+}
+
+/* BUTTON FULL WIDTH */
+button{
+    width:100%;
+}
+
+/* FORCE REMOVE SIDEBAR SPACE */
+.main{
+    margin-left:0 !important;
+    width:100% !important;
+}
+
+/* FIX SIDEBAR */
+.sidebar{
+    position:relative !important;
+    width:100% !important;
+    height:auto !important;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+}
+
+/* FIX LINKS */
+.sidebar a{
+    margin:0;
+    font-size:14px;
+}
+
+.d-flex{
+        display:block !important;
+    }
+
+/* ================= FINAL MOBILE FIX ================= */
+
+/* 1. BREAK FLEX (VERY IMPORTANT) */
+.d-flex{
+    display:block !important;
+}
+
+/* 2. SIDEBAR → TOP */
+.sidebar{
+    width:100% !important;
+    height:auto !important;
+    position:relative !important;
+    display:flex !important;
+    justify-content:space-around !important;
+    align-items:center !important;
+    padding:10px !important;
+}
+
+/* 3. HIDE LOGO (OPTIONAL) */
+.sidebar h3{
+    display:none;
+}
+
+/* 4. REMOVE LEFT SPACE */
+.main{
+    margin-left:0 !important;
+    width:100% !important;
+    max-width:100% !important;
+    padding:15px !important;
+}
+
+/* 5. FIX BOOTSTRAP CONTAINER (KEY FIX) */
+.container,
+.container-fluid{
+    width:100% !important;
+    max-width:100% !important;
+    padding:0 10px !important;
+}
+
+/* 6. CARDS FULL WIDTH */
+.dashboard-card{
+    width:100% !important;
+}
+
+/* 7. TABLE SCROLL */
+.table,
+.table-responsive{
+    display:block;
+    width:100%;
+    overflow-x:auto;
+}
+
+/* 8. BUTTON FULL WIDTH */
+button{
+    width:100% !important;
+    margin:10px 0 !important;
+}
+
+}
+
+/* ===== LOGOUT FIX ===== */
+
+/* Desktop */
+.sidebar div:last-child{
+    position:absolute;
+    bottom:20px;
+    width:180px;
+}
+
+/* Mobile */
+@media (max-width:768px){
+
+.sidebar div:last-child{
+    position:relative !important;
+    bottom:auto !important;
+    width:100% !important;
+    margin-top:10px;
+}
+
+/* Optional: make it look clean */
+.sidebar{
+    flex-wrap:wrap;
+}
+
+}
